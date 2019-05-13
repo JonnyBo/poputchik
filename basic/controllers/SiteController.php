@@ -198,13 +198,30 @@ class SiteController extends Controller
         $apps = Yii::$app->db->createCommand('SELECT * FROM driver_apps WHERE order_id=:arrival_id')->bindValues($params)->queryAll();
         $result = [];
         if (!empty($apps)) {
+            $params = [];
             foreach ($apps as $app) {
                 $driver = Drivers::findOne($app['driver_id']);
+                $params = [':arrival_id' => $arrival->id, ':departure_id' => $arrival->id];
+                $round = Yii::$app->db->createCommand('SELECT * FROM rounds WHERE arrival_id=:arrival_id OR departure_id=:departure_id')->bindValues($params)->queryOne();
                 $app['driver_name'] = $driver->name;
                 $app['driver_phone'] = $driver->phone;
                 $app['driver_auto_model'] = $driver->auto_model;
                 $app['driver_places'] = $driver->places;
                 $result[] = $app;
+                if (!empty($round)) {
+                    if ($arrival->id == $round['arrival_id']) {
+                        $addparams = [':arrival_id' => $round['departure_id']];
+                    } else {
+                        $addparams = [':arrival_id' => $round['arrival_id']];
+                    }
+                    $addapps = Yii::$app->db->createCommand('SELECT * FROM driver_apps WHERE order_id=:arrival_id')->bindValues($addparams)->queryOne();
+                    $addapps['driver_name'] = $driver->name;
+                    $addapps['driver_phone'] = $driver->phone;
+                    $addapps['driver_auto_model'] = $driver->auto_model;
+                    $addapps['driver_places'] = $driver->places;
+                    $addapps['driver_return'] = 1;
+                    $result[] = $addapps;
+                }
             }
         }
         $dataProvider = new ArrayDataProvider([

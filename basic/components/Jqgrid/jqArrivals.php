@@ -85,7 +85,7 @@ class jqArrivals extends jqGrid
                 'align' => 'center',
                 'editable' => false,
                 'db' => 'a.id',
-                'hidden' => true,
+                //'hidden' => true,
             ),
 
             'date' => array('label' => 'Дата',
@@ -206,8 +206,9 @@ class jqArrivals extends jqGrid
             $r['driver'] = $row['name'];
             $r['_class'] = 'white';
         } else {
-            //$r['driver'] = "<button class='set-driver act-driver'>Привязать водителя</button>";
-            $r['driver'] = "";
+            $result = $this->DB->query('SELECT * FROM driver_apps WHERE order_id=' . intval($r['id']));
+            $row = $this->DB->fetch($result);
+            $r['driver'] = $r['driver'] = $r['id'] . ' - ' . count($row);
             $r['_class'] = 'red';
         }
         $r['date'] = Yii::$app->formatter->asDatetime($r['date'], 'php:d.m.Y H:i');

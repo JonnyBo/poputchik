@@ -49,19 +49,27 @@ use app\models\Drivers;
                     $columns = array(
                         //['class' => 'yii\grid\SerialColumn'],
                         array(
-                            //'label'=>$model->getAttributeLabel('project_name'),
+                            'label'=>'Дата',
                             'attribute'=>'date',
                             'format' =>  ['date', 'dd.MM.YYYY HH:mm'],
                         ),
                         array(
-                            //'label'=>$model->getAttributeLabel('start_url'),
-                            'attribute'=>'place_from',
+                            'label'=>'Водитель',
+                            'attribute'=>'driver_name',
                         ),
                         array(
-                            //'label'=>'Начало работы',
-                            'attribute'=>'place_to',
+                            'label'=>'Телефон',
+                            'attribute'=>'driver_phone',
                         ),
-
+                        array(
+                            'label'=>'Модель авто',
+                            'attribute'=>'driver_auto_model',
+                        ),
+                        array(
+                            'label'=>'Кол-во мест',
+                            'attribute'=>'driver_places',
+                        ),
+                        /*
                         array(
                             //'label'=>'Окончание работы',
                             'attribute'=>'driver_id',
@@ -69,6 +77,7 @@ use app\models\Drivers;
                                 return $model->driver->name;
                             },
                         ),
+                        */
                         /*
                         array(
                             'label'=>'Осталось',
@@ -100,15 +109,16 @@ use app\models\Drivers;
                             'class' => 'yii\grid\ActionColumn',
                             'header'=>'Действия',
                             'template' => '{confirm}',
-                            'urlCreator'=>function($action, $apps, $key, $index){
-                                return \yii\helpers\Url::to(['site/setprevdriver','id'=>$apps->id]);
+                            'urlCreator'=>function($action, $dataProvider, $key, $index){
+                                return \yii\helpers\Url::to(['site/setprevdriver','id'=>$dataProvider['driver_id']]);
                             },
                             'buttons' => [
                                 'confirm' => function ($url,$apps,$key) {
-                                    return Html::a('Выбрать', $url, ['class' => 'btn btn-success btn-xs']);
+                                    return Html::a('Выбрать', $url, ['class' => 'btn btn-success btn-xs usedriver']);
                                 },
                             ],
                         ],
+
                     );
                     echo '<h3>Заявки водителей</h3>';
                     echo GridView::widget([

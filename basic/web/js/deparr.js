@@ -544,5 +544,37 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on("click", '.usedriver', function (e) {
+        e.preventDefault();
+        var arrival_id = $('input[name=arrival_id]').val();
+        var url = $(this).attr('href');
+        //console.log(form.serialize());
+        $.ajax({
+            url: url,
+            async: true,
+            type: "POST",
+            data: {'arrival_id':arrival_id},
+            success: function (result) {
+                var modalContainer = $('#my-modal');
+                var modalBody = modalContainer.find('.modal-body');
+                var insidemodalBody = modalContainer.find('.gb-user-form');
+
+                if (result == 'true') {
+                    insidemodalBody.html(result).hide(); //
+                    //$('#my-modal').modal('hide');
+                    $('#success').html("<div class='alert alert-success'>");
+                    $('#success > .alert-success').append("<strong>Водитель назначен.</strong>");
+                    $('#success > .alert-success').append('</div>');
+                    window.location.reload();
+                    setTimeout(function() { // скрываем modal через 4 секунды
+                        $("#my-modal").modal('hide');
+                    }, 4000);
+                }
+                else {
+                    modalBody.html(result).hide().fadeIn();
+                }
+            }
+        });
+    });
 
 });

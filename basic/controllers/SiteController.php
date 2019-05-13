@@ -192,14 +192,23 @@ class SiteController extends Controller
     public function actionSetdriver()
     {
         $id = intval(Yii::$app->request->post('id'));
-        $model = new Drivers();
         $arrival = Arrivals::findOne($id);
-        //print_r($arrival);
-        $apps = Apps::find()->where(['place_from' => $arrival->departure_point])->all();
-        //print_r($apps);
-        //exit();
+        $model = new Drivers();
+        $params = [':arrival_id' => $arrival->id];
+        $apps = Yii::$app->db->createCommand('SELECT * FROM driver_apps WHERE order_id=:arrival_id')->bindValues($params)->queryAll();
+        $result = [];
+        if (!empty($apps)) {
+            foreach ($apps as $app) {
+                $driver = Drivers::findOne($app['driver_id']);
+                $app['driver_name'] = $driver->name;
+                $app['driver_phone'] = $driver->phone;
+                $app['driver_auto_model'] = $driver->auto_model;
+                $app['driver_places'] = $driver->places;
+                $result[] = $app;
+            }
+        }
         $dataProvider = new ArrayDataProvider([
-            'allModels' => $apps,
+            'allModels' => $result,
             'sort' => [
                 'attributes' => ['date'],
             ],
@@ -208,7 +217,7 @@ class SiteController extends Controller
             ],
         ]);
         return $this->renderAjax('setdrivers', [
-            'model' => $model, 'arrival_id' => $id, 'dataProvider' => $dataProvider, 'apps' => $apps
+            'model' => $model, 'arrival_id' => $id, 'dataProvider' => $dataProvider, 'arrival' => $arrival
         ]);
     }
 
@@ -229,6 +238,19 @@ class SiteController extends Controller
         return $this->renderAjax('allapps', [
             'model' => $apps, 'dataProvider' => $dataProvider
         ]);
+    }
+
+    //одобрение заявки Водителя
+    public function actionSetprevdriver($id) {
+        $arrival_id = intval(Yii::$app->request->post('arrival_id'));
+        $arrival = Arrivals::findOne($arrival_id);
+        if (intval($id) > 0) {
+            $arrival->driver_id = intval($id);
+        }
+        $arrival->save(false);
+        $params = [':arrival_id' => $arrival_id];
+        Yii::$app->db->createCommand('DELETE FROM driver_apps WHERE order_id=:arrival_id', $params)->execute();
+        return json_encode(true);
     }
 
     // Сохранение назначения водителя

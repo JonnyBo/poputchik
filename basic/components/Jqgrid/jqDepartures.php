@@ -23,12 +23,14 @@ class jqDepartures extends jqGrid
             'onSelectRow' => new jqGrid_Data_Raw("function(id){ 
                 $('button.edit-order').removeAttr('disabled');
                 $('button.edit-order').attr('onClick', 'openEditOrder('+id+')');
+                $('button.set-driver').removeAttr('disabled');
+                $('button.set-driver').attr('onClick', 'openSetDriver('+id+')');
                 if ($('#'+id).find('td:last-child').text() == '') {
-                    $('button.set-driver').removeAttr('disabled');
+                    //$('button.set-driver').removeAttr('disabled');
                     $('button.clear-driver').attr('disabled', 'disable'); 
-                    $('button.set-driver').attr('onClick', 'openSetDriver('+id+')');
+                    //$('button.set-driver').attr('onClick', 'openSetDriver('+id+')');
                 } else {
-                    $('button.set-driver').attr('disabled', 'disable');
+                    //$('button.set-driver').attr('disabled', 'disable');
                     $('button.clear-driver').removeAttr('disabled');
                     $('button.clear-driver').attr('onClick', 'clearDriver('+id+')');
                 }
@@ -73,7 +75,7 @@ class jqDepartures extends jqGrid
                 'align' => 'center',
                 'editable' => false, //id is non-editable
                 'db' => 'a.id',
-                'hidden' => true,
+                //'hidden' => true,
             ),
 
             'date' => array('label' => 'Дата',
@@ -233,8 +235,10 @@ class jqDepartures extends jqGrid
             $r['driver'] = $row['name'];
             $r['_class'] = 'white';
         } else {
-            //$r['driver'] = "<button class='set-driver act-driver'>Привязать водителя</button>";
-            $r['driver'] = "";
+            $result = $this->DB->query('SELECT * FROM driver_apps WHERE order_id=' . intval($r['id']));
+            $row = $this->DB->rowCount($result);
+            //$r['driver'] = $r['id'] . ' - ' . count($row);
+            $r['driver'] = $row;
             $r['_class'] = 'red';
         }
         $r['date'] = Yii::$app->formatter->asDatetime($r['date'], 'php:d.m.Y H:i');

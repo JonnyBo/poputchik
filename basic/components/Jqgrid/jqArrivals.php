@@ -207,8 +207,9 @@ class jqArrivals extends jqGrid
             $r['_class'] = 'white';
         } else {
             $result = $this->DB->query('SELECT * FROM driver_apps WHERE order_id=' . intval($r['id']));
-            $row = $this->DB->fetch($result);
-            $r['driver'] = $r['driver'] = $r['id'] . ' - ' . count($row);
+            $row = $this->DB->rowCount($result);
+            //$r['driver'] = $r['id'] . ' - ' . count($row);
+            $r['driver'] = $row;
             $r['_class'] = 'red';
         }
         $r['date'] = Yii::$app->formatter->asDatetime($r['date'], 'php:d.m.Y H:i');

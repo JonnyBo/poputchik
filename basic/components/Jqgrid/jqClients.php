@@ -80,7 +80,7 @@ class jqClients extends jqGrid
         );
 
         #Set nav
-        $this->nav = array('add' => false, 'edit' => true, 'del' => true);
+        $this->nav = array('add' => false, 'edit' => false, 'del' => true);
 
         #Add filter toolbar
         //$this->render_filter_toolbar = true;

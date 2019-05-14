@@ -79,12 +79,12 @@ AppAsset::register($this);
                 ],
             ],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Вход', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Выход (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link']
                 )
                 . Html::endForm()
@@ -107,7 +107,7 @@ AppAsset::register($this);
     <div class="container">
         <p class="pull-left">&copy; Попутчик <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <!--p class="pull-right"><?= Yii::powered() ?></p-->
     </div>
 </footer>
 

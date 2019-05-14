@@ -84,13 +84,13 @@ if (Yii::$app->user->can('driver')) {
 
 <div class="table-nav">
     <a class="btn btn-success new-order">Новый заказ клиента</a>
-    <a class="btn btn-success new-app">Новая заявка водителя</a>
+    <!--a class="btn btn-success new-app">Новая заявка водителя</a-->
     <button type="button" class="btn btn-success edit-order"  disabled="disabled">Редактировать</button>
     <button type="button" class="btn btn-primary set-driver"  disabled="disabled">Привязать водителя</button>
     <button type="button" class="btn btn-secondary clear-driver"  disabled="disabled">Отвязать водителя</button>
     <button type="button" class="btn btn-primary connect"  disabled="disabled">Связать</button>
     <button type="button" class="btn btn-secondary disconnect" disabled="disabled">Отвязать</button>
-    <a class="btn btn-success all-apps">Заявки водителей</a>
+    <!--a class="btn btn-success all-apps">Заявки водителей</a-->
     <div class="filter">
         <div class="col-lg-6">
         <?php $form = ActiveForm::begin(['action' => '/departures-arrivals/index', 'method' => 'get']); ?>

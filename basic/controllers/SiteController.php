@@ -72,8 +72,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         //echo Yii::$app->formatter->asDate('22.02.2019 14:11:00', 'php:Y-m-d H:i:s');
-        $userRole = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
-        print_r($userRole);
+        //$userRole = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
+        //print_r($userRole);
         return $this->render('index');
     }
 
@@ -208,6 +208,7 @@ class SiteController extends Controller
                 $app['driver_auto_model'] = $driver->auto_model;
                 $app['driver_places'] = $driver->places;
                 $result[] = $app;
+                /*
                 if (!empty($round)) {
                     if ($arrival->id == $round['arrival_id']) {
                         $addparams = [':arrival_id' => $round['departure_id']];
@@ -222,6 +223,7 @@ class SiteController extends Controller
                     $addapps['driver_return'] = 1;
                     $result[] = $addapps;
                 }
+                */
             }
         }
         $dataProvider = new ArrayDataProvider([

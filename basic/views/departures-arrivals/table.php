@@ -8,11 +8,16 @@ use yii\grid\GridView;
 
 
 //jQuery
-$this->registerJsFile('/jqGrid/js/jquery/1.7.2/jquery.min.js', ['position' => \yii\web\View::POS_HEAD]);
+//$this->registerJsFile('/jqGrid/js/jquery/1.7.2/jquery.min.js', ['position' => \yii\web\View::POS_HEAD]);
+
+$this->registerJsFile('/js/jquery-1.11.0.min.js', ['position' => \yii\web\View::POS_HEAD]);
 
 //jQuery UI
 $this->registerJsFile('/jqGrid/js/jquery-ui/1.8.11/jquery-ui.min.js',  ['position' => \yii\web\View::POS_HEAD]);
 $this->registerCssFile('/jqGrid/js/jquery-ui/1.8.11/themes/redmond/jquery.ui.all.min.css');
+
+
+$this->registerCssFile('/css/distractful.css');
 
 /*
 $this->registerJsFile('/jqGrid/plugins/ui.multiselect.js',  ['position' => \yii\web\View::POS_HEAD]);
@@ -81,9 +86,9 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
     </div>
 </div>
 
-<div class="tables">
-    <!-- Первое содержимое-->
-    <div class="col-lg-6 win">
+<div id="MainSlider">
+    <div class="distractful-item">
+            <div class="win">
         <?php
         //print_r($departures);
         $columns = array(
@@ -209,7 +214,9 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
         ]);
         ?>
     </div>
-    <div class="col-lg-6 win">
+</div>
+    <div class="distractful-item">
+    <div class="win">
         <?php
         echo GridView::widget([
             'dataProvider' => $dataProvider_right,
@@ -225,9 +232,12 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
         ?>
     </div>
 </div>
+</div>
 
 <?php
-$this->registerJsFile('js/deparr.js',    ['depends'=>'app\assets\AppAsset']);
+$this->registerJsFile('/js/deparr.js',    ['depends'=>'app\assets\AppAsset']);
+$this->registerJsFile('/js/distractful.js', ['depends'=>'app\assets\AppAsset']);
+$this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js', ['depends'=>'app\assets\AppAsset']);
 ?>
 
 

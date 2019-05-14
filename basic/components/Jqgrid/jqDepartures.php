@@ -146,6 +146,7 @@ class jqDepartures extends jqGrid
                 'align' => 'center',
                 'manual' => true,
                 'encode' => false,
+                'sortable' => false,
             ),
 
             'driver_id' => array('db' => 'a.driver_id',

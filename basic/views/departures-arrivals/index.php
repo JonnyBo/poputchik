@@ -39,6 +39,8 @@ $this->registerCssFile('/jqGrid/range_picker/css/ui.daterangepicker.css');
 $this->registerJsFile('/jqGrid/highlightjs/6.0/highlight.min.js', ['position' => \yii\web\View::POS_HEAD]);
 $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
 
+
+
 // JS
 //$this->registerJsFile('/js/analytics-phone/index.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 //$this->registerCssFile('/css/analytics-phone/index.css');
@@ -115,7 +117,6 @@ if (Yii::$app->user->can('driver')) {
         <div class="clearfix"></div>
     </div>
 </div>
-
 
     <div class="tables">
         <!-- Первое содержимое-->

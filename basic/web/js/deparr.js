@@ -157,7 +157,7 @@ function openDriverOrder(id) {
 
 $(document).ready(function () {
 
-
+/*
     $('#MainSlider').distractful({
         parallax: false,         // true || false
         parallaxScroll: 215,    // How far the div will move. Default, no movement. lower num = faster
@@ -186,6 +186,22 @@ $(document).ready(function () {
         beforeSlide: function(){
             //console.log('loaded before sliding')
         }
+    });
+*/
+    $('#MainSlider').flexslider({
+        animation: "slide",
+        slideshow: false,                //Включание автопроигрывания слайдшоу (true/false)
+        /* slideshowSpeed: 7000,           //Установка скорости переключения слайдов в слайдшоу, в миллисекундах */
+        animationDuration: 500,         //Скорость выполнения анимации, в миллисекундах
+        animationLoop: false,
+        directionNav: true,             //Включение навигации предыдущий/следующий (true/false)
+        controlNav: false,               //Включение постраничной навигации (true/false)
+        keyboardNav: true,
+        //itemWidth: 156,
+        //itemMargin: 28,              //Включение навигации с использованием клавиатуры(true/false)
+        prevText: "<img src='/images/arrow_left.png' />",           //Текст для пункта "предыдущий" directionNav
+        nextText: "<img src='/images/arrow_right.png' />",               //Текст для пункта "следующий" directionNav
+        slideToStart: 0
     });
 
 

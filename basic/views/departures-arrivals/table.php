@@ -17,7 +17,7 @@ $this->registerJsFile('/jqGrid/js/jquery-ui/1.8.11/jquery-ui.min.js',  ['positio
 $this->registerCssFile('/jqGrid/js/jquery-ui/1.8.11/themes/redmond/jquery.ui.all.min.css');
 
 
-$this->registerCssFile('/css/distractful.css');
+$this->registerCssFile('/css/flexslider.css');
 
 /*
 $this->registerJsFile('/jqGrid/plugins/ui.multiselect.js',  ['position' => \yii\web\View::POS_HEAD]);
@@ -87,7 +87,8 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
 </div>
 
 <div id="MainSlider">
-    <div class="distractful-item">
+    <ul class="slides">
+    <li class="sitem">
             <div class="win">
         <?php
         //print_r($departures);
@@ -214,8 +215,8 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
         ]);
         ?>
     </div>
-</div>
-    <div class="distractful-item">
+</li>
+    <li class="sitem">
     <div class="win">
         <?php
         echo GridView::widget([
@@ -231,12 +232,13 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
         ]);
         ?>
     </div>
-</div>
+</li>
+    </ul>
 </div>
 
 <?php
 $this->registerJsFile('/js/deparr.js',    ['depends'=>'app\assets\AppAsset']);
-$this->registerJsFile('/js/distractful.js', ['depends'=>'app\assets\AppAsset']);
+$this->registerJsFile('/js/jquery.flexslider-min.js', ['depends'=>'app\assets\AppAsset']);
 $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js', ['depends'=>'app\assets\AppAsset']);
 ?>
 

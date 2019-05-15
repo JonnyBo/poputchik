@@ -193,7 +193,7 @@ $(document).ready(function () {
         slideshow: false,                //Включание автопроигрывания слайдшоу (true/false)
         /* slideshowSpeed: 7000,           //Установка скорости переключения слайдов в слайдшоу, в миллисекундах */
         animationDuration: 500,         //Скорость выполнения анимации, в миллисекундах
-        animationLoop: false,
+        animationLoop: true,
         directionNav: true,             //Включение навигации предыдущий/следующий (true/false)
         controlNav: false,               //Включение постраничной навигации (true/false)
         keyboardNav: true,

@@ -60,11 +60,11 @@ class Arrivals extends ActiveRecord
         if (!empty($apps)) {
             foreach ($apps as $app) {
                 if ($app['driver_id'] == $driver->id) {
-                    return 'уже подана';
+                    return 'подана';
                 }
             }
             if (count($apps) >= 5)
-                return 'уже есть 5';
+                return 'есть 5';
         }
         //return false;
     }

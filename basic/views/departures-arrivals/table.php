@@ -45,7 +45,12 @@ $this->registerJsFile('/jqGrid/highlightjs/6.0/highlight.min.js',  ['position' =
 $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
 */
 ?>
-
+<style>
+    .wrap > .container-fluid {padding: 70px 1px 20px 1px;}
+    .wrap .table-nav {padding: 15px 1px;}
+    .table {font-size: 10px;}
+    .table td {padding: 5px 1px !important;}
+</style>
 
 <link rel="icon" href="misc/favicon.png" type="image/png">
 
@@ -64,7 +69,7 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
     <div class="filter">
         <div class="col-lg-6">
             <?php $form = ActiveForm::begin(['action' => '/departures-arrivals/table', 'method' => 'get']); ?>
-            <div class="col-xs-10">
+            <div class="col-xs-8">
                 <?= DatePicker::widget([
                     'name' => 'from_date',
                     'value' => $_GET['from_date'],
@@ -77,7 +82,7 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                     ]
                 ]); ?>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-4">
                 <?= Html::submitButton('Выбрать', ['class' => 'btn btn-success']); ?>
             </div>
             <?php  ActiveForm::end(); ?>
@@ -89,26 +94,31 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
 <div id="MainSlider">
     <ul class="slides">
     <li class="sitem">
-            <div class="win">
+            <div>
         <?php
         //print_r($departures);
         $columns = array(
             //['class' => 'yii\grid\SerialColumn'],
             array(
+                'label'=>'Дата',
                 'attribute'=>'date',
                 'format' =>  ['date', 'dd.MM.YYYY HH:mm'],
             ),
             array(
                 'attribute'=>'flight_number',
+                'label'=>'Рейс',
             ),
             array(
                 'attribute'=>'departure_point',
+                'label'=>'Откуда',
             ),
             array(
                 'attribute'=>'arrival_point',
+                'label'=>'Куда',
             ),
             array(
                 'attribute'=>'quantity',
+                'label'=>'Мест',
             ),
             array(
                 'attribute'=>'price',
@@ -132,18 +142,23 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                 array(
                     'attribute'=>'date',
                     'format' =>  ['date', 'dd.MM.YYYY HH:mm'],
+                    'label'=>'Дата',
                 ),
                 array(
                     'attribute'=>'flight_number',
+                    'label'=>'Рейс',
                 ),
                 array(
                     'attribute'=>'departure_point',
+                    'label'=>'Откуда',
                 ),
                 array(
                     'attribute'=>'arrival_point',
+                    'label'=>'Куда',
                 ),
                 array(
                     'attribute'=>'quantity',
+                    'label'=>'Мест',
                 ),
                 /*
                 array(
@@ -155,13 +170,14 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                         return $model->client->name;
                     },
                 ),
-                */
+
                 array(
                     'attribute'=>'driver_id',
                     'value' => function ($model, $key, $index, $widget) {
                         return $model->driver->name;
                     },
                 ),
+                */
             );
             //кнопки
             $columns_left = $columns_right = $columns;
@@ -205,7 +221,8 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
         echo GridView::widget([
             'dataProvider' => $dataProvider_left,
             'summary' => '',
-            //'template'=>'{items}',
+            'caption'=>'Прилеты',
+            'showHeader' => true,
             'columns' => $columns_left,
             'rowOptions' => function($arrivals, $key, $index, $grid){
                 if($arrivals->driver_id == 0){
@@ -217,12 +234,13 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
     </div>
 </li>
     <li class="sitem">
-    <div class="win">
+    <div>
         <?php
         echo GridView::widget([
             'dataProvider' => $dataProvider_right,
             'summary' => '',
-            //'template'=>'{items}',
+            'caption'=>'Вылеты',
+            'showHeader' => true,
             'columns' => $columns_right,
             'rowOptions' => function($departures, $key, $index, $grid){
                 if($departures->driver_id == 0){
@@ -238,6 +256,7 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
 
 <?php
 $this->registerJsFile('/js/deparr.js',    ['depends'=>'app\assets\AppAsset']);
+$this->registerJsFile('/js/slider.js',    ['depends'=>'app\assets\AppAsset']);
 $this->registerJsFile('/js/jquery.flexslider-min.js', ['depends'=>'app\assets\AppAsset']);
 $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js', ['depends'=>'app\assets\AppAsset']);
 ?>

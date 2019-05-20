@@ -21,7 +21,9 @@ use yii\web\JsExpression;
     <?php $form = ActiveForm::begin(['options' => ['class' => 'newdriver-form']]); ?>
     <h3>Новый Водитель</h3>
 
+    <?= $form->field($model, 'login')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 
+    <?= $form->field($model, 'password')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 

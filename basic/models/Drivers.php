@@ -48,6 +48,8 @@ class Drivers extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'Пользователь',
+            'login' => 'Логин',
+            'password' => 'Пароль',
             'name' => 'Водитель',
             'phone' => 'Телефон',
             'auto_color' => 'Цвет авто',

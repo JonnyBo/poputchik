@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Drivers;
+use app\models\User;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -75,6 +76,15 @@ class DriversController extends \yii\web\Controller
         $model = new Drivers();
         if($model->load(Yii::$app->request->post()) /*&& $model->validate()*/) {
             $model->created = Yii::$app->formatter->asDatetime(Yii::$app->request->post('created'), 'php:Y-m-d H:i:s');
+            $model->save(false);
+            $user = new User();
+            $user->username = $model->login;
+            $user->password = Yii::$app->security->generatePasswordHash($model->password);
+            $user->auth_key = Yii::$app->security->generateRandomString();
+            $user->save();
+            $userRole = Yii::$app->authManager->getRole('driver');
+            Yii::$app->authManager->assign($userRole, $user->getId());
+            $model->user_id = $user->getId();
             $model->save(false);
             return json_encode(true);
         } else {

@@ -23,6 +23,10 @@ use yii\web\JsExpression;
 
     <?= $form->field($model, 'id')->hiddenInput()->label(false); ?>
 
+    <?= $form->field($model, 'login')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
+
+    <?= $form->field($model, 'password')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
+
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>

@@ -79,9 +79,12 @@ class DriversController extends \yii\web\Controller
             $model->save(false);
             $user = new User();
             $user->username = $model->login;
-            $user->password = Yii::$app->security->generatePasswordHash($model->password);
-            $user->auth_key = Yii::$app->security->generateRandomString();
+            $user->setPassword($model->password);
+            $user->generateAuthKey();
+            //$user->password = Yii::$app->security->generatePasswordHash($model->password);
+            //$user->auth_key = Yii::$app->security->generateRandomString();
             $user->save();
+
             $userRole = Yii::$app->authManager->getRole('driver');
             Yii::$app->authManager->assign($userRole, $user->getId());
             $model->user_id = $user->getId();

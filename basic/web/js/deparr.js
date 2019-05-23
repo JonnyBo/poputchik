@@ -154,44 +154,24 @@ function openDriverOrder(id) {
     });
 }
 
-
-$(document).ready(function () {
-
-/*
-    $('#MainSlider').distractful({
-        parallax: false,         // true || false
-        parallaxScroll: 215,    // How far the div will move. Default, no movement. lower num = faster
-        controls: true,         // moving || true || false. use false to hide
-        scrollSpeed: 1000,      // int. Default: 1000 (1 second)
-        easing: false,// false || 'easingFunctionName. Use an easing function. Requires Easing library. Set to 'false' to disable, will use jQuery animate
-        auto: false,             // true  || false. default false. Turn on auto-play sliding.
-        autoDirection: 'right', // right || left. default right. Which direction does the auto-play go
-        pauseTime: 5000,        // int. How long until next slide. Default: 5000
-        hoverPause: true,       // true || false. default false. Hover over distractful to stop auto-play
-        showPagers: true,       // true || false. default true. Show the pagers
-        touch:true,             // true || false. default true. Turn on touch events for mobile
-        keyPress: false,        // true || false, default false. Use left and right keyboard keys to control Distractful slides
-        imageLoaded: function(){
-            //console.log('images loaded, ready to slide')
-        },
-        slideComplete: function(){
-            //console.log('slide done sliding')
-        },
-        slideRight: function(){
-            //console.log('slide right done')
-        },
-        slideLeft: function(){
-            //console.log('slide left done')
-        },
-        beforeSlide: function(){
-            //console.log('loaded before sliding')
+function openMyOrder(id) {
+    var url = '/departures-arrivals/myorder';
+    var modalContainer = $('#my-modal');
+    var modalBody = modalContainer.find('.modal-body');
+    modalContainer.modal({show:true});
+    $.ajax({
+        url: url,
+        async: true,
+        type: "POST",
+        data: {'id':id},
+        success: function (data) {
+            $('.modal-body').html(data);
+            modalContainer.modal({show:true});
         }
     });
-*/
+}
 
-
-
-
+$(document).ready(function () {
 
     $('.new-client').click(function(event){ // нажатие на кнопку - выпадает модальное окно
         event.preventDefault();

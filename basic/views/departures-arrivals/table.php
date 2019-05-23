@@ -96,7 +96,7 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
     <li class="sitem">
             <div>
         <?php
-        //print_r($departures);
+        //print_r($driver);
         $columns = array(
             //['class' => 'yii\grid\SerialColumn'],
             array(
@@ -190,11 +190,14 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                 },
                 'buttons' => [
                     'confirm' => function ($url, $arrivals, $key) {
+                        $driver = \app\models\Drivers::findByUserId();
                         if ($arrivals->driver_id == 0) {
                             if ($res = \app\models\Arrivals::getStatus($arrivals->id)) {
                                 return Html::tag('p', $res, ['class' => 'app-use']);
                             }
                             return Html::button('Беру', ['class' => 'btn btn-success btn-xs', 'onclick' => 'openDriverOrder("'.$arrivals->id.'");']);
+                        } elseif ($arrivals->driver_id == $driver['id']) {
+                            return Html::button('Взята', ['class' => 'btn btn-primary btn-xs', 'onclick' => 'openMyOrder("'.$arrivals->id.'");']);
                         }
                     },
                 ],
@@ -208,11 +211,14 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                 },
                 'buttons' => [
                     'confirm' => function ($url, $departures, $key) {
+                        $driver = \app\models\Drivers::findByUserId();
                         if ($departures->driver_id == 0) {
                             if ($res = \app\models\Arrivals::getStatus($departures->id)) {
                                 return Html::tag('p', $res, ['class' => 'app-use']);
                             }
                             return Html::button('Беру', ['class' => 'btn btn-success btn-xs', 'onclick' => 'openDriverOrder("'.$departures->id.'");']);
+                        } elseif ($departures->driver_id == $driver['id']) {
+                            return Html::button('Взята', ['class' => 'btn btn-primary btn-xs', 'onclick' => 'openMyOrder("'.$arrivals->id.'");']);
                         }
                     },
                 ],

@@ -21,12 +21,14 @@ class jqArrivals extends jqGrid
             'onSelectRow' => new jqGrid_Data_Raw("function(id){ 
                 $('button.edit-order').removeAttr('disabled');
                 $('button.edit-order').attr('onClick', 'openEditOrder('+id+')');
+                $('button.set-driver').removeAttr('disabled');
+                $('button.set-driver').attr('onClick', 'openSetDriver('+id+')');
                 if ($('#'+id).find('td:last-child').text() == '') {
-                    $('button.set-driver').removeAttr('disabled');
+                    //$('button.set-driver').removeAttr('disabled');
                     $('button.clear-driver').attr('disabled', 'disable'); 
-                    $('button.set-driver').attr('onClick', 'openSetDriver('+id+')');
+                    //$('button.set-driver').attr('onClick', 'openSetDriver('+id+')');
                 } else {
-                    $('button.set-driver').attr('disabled', 'disable');
+                    //$('button.set-driver').attr('disabled', 'disable');
                     $('button.clear-driver').removeAttr('disabled');
                     $('button.clear-driver').attr('onClick', 'clearDriver('+id+')');
                 }

@@ -68,8 +68,8 @@ class DeparturesArrivalsController extends Controller
         }
         $userRole = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
 
-        $rendered_grid_left = Yii::$app->JqgridTable->jqSimple('jqDepartures');
-        $rendered_grid_right = Yii::$app->JqgridTable->jqSimple('jqArrivals');
+        $rendered_grid_left = Yii::$app->JqgridTable->jqSimple('jqArrivals');
+        $rendered_grid_right = Yii::$app->JqgridTable->jqSimple('jqDepartures');
         return $this->render('index', [
             'rendered_grid_left' => $rendered_grid_left,
             'rendered_grid_right' => $rendered_grid_right,
@@ -88,9 +88,10 @@ class DeparturesArrivalsController extends Controller
             $to_date = Yii::$app->formatter->asDatetime($to_date, 'php:Y-m-d');
             $where = ['between', 'date', $from_date, $to_date];
         }
+        $driver = Drivers::find()->where(['user_id' => Yii::$app->user->getId()])->one();
         $userRole = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
-        $arrivals = Arrivals::find()->where(['type' => 'arrivals'])->andWhere($where)->orderBy(['date' => SORT_DESC])->all();
-        $departures = Arrivals::find()->where(['type' => 'departures'])->andWhere($where)->orderBy(['date' => SORT_DESC])->all();
+        $arrivals = Arrivals::find()->where(['type' => 'arrivals', 'driver_id' => 0])->orWhere(['type' => 'arrivals', 'driver_id' => $driver['id']])->andWhere($where)->orderBy(['date' => SORT_DESC])->all();
+        $departures = Arrivals::find()->where(['type' => 'departures', 'driver_id' => 0])->orWhere(['type' => 'departures', 'driver_id' => $driver['id']])->andWhere($where)->orderBy(['date' => SORT_DESC])->all();
 
         $dataProvider_left = new ArrayDataProvider([
             'allModels' => $arrivals,
@@ -202,6 +203,25 @@ class DeparturesArrivalsController extends Controller
             else                    $log_a .= "[".$key."] => ".$value."\n";
         }
         return $log_a;
+    }
+
+    // Всплывшее модальное окно заказа водителем
+    public function actionMyorder()
+    {
+        $id = intval(Yii::$app->request->post('id'));
+        $arrival = Arrivals::findOne($id);
+        /*
+        $where = ['driver_id' => 0];
+        $departures = [];
+        if ($arrival->type == 'arrivals') {
+            //$where = ['between', 'date', $arrival->date, date('Y-m-d H:i:s', strtotime($arrival->date . ' +1 day'))];
+            $departures = Arrivals::find()->where(['type' => 'departures'])->andWhere($where)->orderBy(['date' => SORT_ASC])->all();
+
+        }
+        */
+        return $this->renderAjax('myorder', [
+            'model' => $arrival
+        ]);
     }
 
     // Всплывшее модальное окно принятия заказа водителем

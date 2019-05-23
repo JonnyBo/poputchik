@@ -160,10 +160,11 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                     'attribute'=>'quantity',
                     'label'=>'Мест',
                 ),
-                /*
                 array(
                     'attribute'=>'price',
+                    'label'=>'Цена',
                 ),
+                /*
                 array(
                     'attribute'=>'client_id',
                     'value' => function ($model, $key, $index, $widget) {
@@ -218,7 +219,7 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                             }
                             return Html::button('Беру', ['class' => 'btn btn-success btn-xs', 'onclick' => 'openDriverOrder("'.$departures->id.'");']);
                         } elseif ($departures->driver_id == $driver['id']) {
-                            return Html::button('Взята', ['class' => 'btn btn-primary btn-xs', 'onclick' => 'openMyOrder("'.$arrivals->id.'");']);
+                            return Html::button('Взята', ['class' => 'btn btn-primary btn-xs', 'onclick' => 'openMyOrder("'.$departures->id.'");']);
                         }
                     },
                 ],

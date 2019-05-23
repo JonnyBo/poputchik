@@ -18,6 +18,9 @@ use yii\grid\GridView;
 
     <?php $form = ActiveForm::begin(['options' => ['class' => 'driverorder-form']]); ?>
     <h3>Мой заказ</h3>
+
+    <?= $form->field($model, 'flight_number')->textInput(['maxlength' => 100], ['class' => 'input-modal']) ?>
+
     <div class="form-group">
         <?= '<label class="control-label">Дата</label>'; ?>
         <?
@@ -42,11 +45,6 @@ use yii\grid\GridView;
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 
-
-
-    <div class="form-group text-right">
-        <?= Html::submitButton('Забронировать', ['class' => 'btn btn-success btn-update-password']) ?>
-    </div>
 
     <?php ActiveForm::end(); ?>
 

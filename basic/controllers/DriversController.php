@@ -43,7 +43,9 @@ class DriversController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        //print_r(Yii::$app->user);
+        if (Yii::$app->user->can('driver')) {
+            $this->redirect('/', 301);
+        }
         $rendered_grid = Yii::$app->JqgridTable->jqSimple('jqDrivers');
         return $this->render('index', [
             'rendered_grid' => $rendered_grid

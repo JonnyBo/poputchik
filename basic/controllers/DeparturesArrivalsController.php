@@ -62,8 +62,6 @@ class DeparturesArrivalsController extends Controller
     {
 
         if (Yii::$app->user->can('driver')) {
-            //echo '111111111111';
-            //header("Location: http://poputchik/departures-arrivals/table");
             $this->redirect('/departures-arrivals/table', 301);
         }
         $userRole = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());

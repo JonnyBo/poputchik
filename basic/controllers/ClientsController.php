@@ -42,6 +42,9 @@ class ClientsController extends \yii\web\Controller
 
     public function actionIndex()
     {
+        if (Yii::$app->user->can('driver')) {
+            $this->redirect('/', 301);
+        }
         $rendered_grid = Yii::$app->JqgridTable->jqSimple('jqClients');
         return $this->render('index', [
             'rendered_grid' => $rendered_grid

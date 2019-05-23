@@ -52,8 +52,9 @@ AppAsset::register($this);
                             'allow' => true,
                             'actions' => ['table'],
                             'roles' => ['driver'],
-                        ],],
+                        ],
                     ],
+                ],
             ],
             ['label' => 'Водители', 'url' => ['/drivers/index'],
                 'access' => [
@@ -64,7 +65,7 @@ AppAsset::register($this);
                             'actions' => ['index'],
                             'roles' => ['admin'],
                         ],
-                        ],
+                    ],
                 ],
             ],
             ['label' => 'Клиенты', 'url' => ['/clients/index'],
@@ -74,8 +75,9 @@ AppAsset::register($this);
                         [
                             'allow' => true,
                             'actions' => ['index'],
-                            'roles' => ['@'],
-                        ],],
+                            'roles' => ['admin'],
+                        ],
+                    ],
                 ],
             ],
             Yii::$app->user->isGuest ? (

@@ -173,6 +173,8 @@ function openMyOrder(id) {
 
 $(document).ready(function () {
 
+    $('span.kv-field-seperator').text('до');
+
     $('.new-client').click(function(event){ // нажатие на кнопку - выпадает модальное окно
         event.preventDefault();
         var url = '/clients/newclient';

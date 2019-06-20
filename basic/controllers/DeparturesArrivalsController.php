@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\models\Clients;
 use app\models\Drivers;
 use Yii;
 use yii\web\Controller;
@@ -208,6 +209,7 @@ class DeparturesArrivalsController extends Controller
     {
         $id = intval(Yii::$app->request->post('id'));
         $arrival = Arrivals::findOne($id);
+        $client = Clients::findOne($arrival->client_id);
         /*
         $where = ['driver_id' => 0];
         $departures = [];
@@ -218,7 +220,8 @@ class DeparturesArrivalsController extends Controller
         }
         */
         return $this->renderAjax('myorder', [
-            'model' => $arrival
+            'model' => $arrival,
+            'client' => $client
         ]);
     }
 

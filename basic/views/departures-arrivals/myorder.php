@@ -45,6 +45,14 @@ use yii\grid\GridView;
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 
+    <?= $form->field($client, 'name')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
+
+    <?= $form->field($client, 'company')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
+
+    <?= $form->field($client, 'phone')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
+
+    <?= $form->field($client, 'add_phone')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
+
 
     <?php ActiveForm::end(); ?>
 

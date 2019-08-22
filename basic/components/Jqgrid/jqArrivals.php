@@ -54,21 +54,30 @@ class jqArrivals extends jqGrid
             ),
         );
 
-        $this->where[] = "a.type = 'arrivals'";
+        //$this->from_date = date('d.m.Y');
 
-        $from_date = Yii::$app->request->get('from_date');
-        $to_date = Yii::$app->request->get('to_date');
-        if ($from_date) {
-            $from_date = Yii::$app->formatter->asDatetime($from_date, 'php:Y-m-d');
+        //print_r($_GET);
+
+        $this->from_date = $_GET['from_date'];
+        $this->to_date = Yii::$app->request->get('to_date');
+        if ($this->from_date) {
+            $this->from_date = Yii::$app->formatter->asDatetime($this->from_date, 'php:Y-m-d');
             //$this->where[] = "a.date >= $from_date";
         }
-        if ($to_date) {
-            $to_date = Yii::$app->formatter->asDatetime($to_date, 'php:Y-m-d');
+        if ($this->to_date) {
+            $this->to_date = Yii::$app->formatter->asDatetime($this->to_date, 'php:Y-m-d');
             //$this->where[] = "a.date <= $to_date";
         }
 
+        $this->where[] = "a.type = 'arrivals'";
 
-        //$this->where[] = "a.date BETWEEN '$from_date' AND '$to_date'";
+        //$this->where[] = "a.date = '2019-02-12'";
+
+        //$this->where[] = "a.date BETWEEN '$this->from_date' AND '$this->to_date'";
+
+        //$mywhere = implode(' AND ', $this->where);
+
+        //echo $from_date;
 
         $this->query = "
             SELECT {fields}
@@ -76,6 +85,8 @@ class jqArrivals extends jqGrid
                 JOIN clients c ON (a.client_id=c.id)
             WHERE {where}
         ";
+
+        //echo $this->query;
 
         //print_r($this->where);
 
@@ -172,12 +183,12 @@ class jqArrivals extends jqGrid
         );
 
         #Set nav
-        $this->nav = array('add' => false, 'edit' => false, 'del' => true);
+        //$this->nav = array('add' => false, 'edit' => false, 'del' => true);
 
         #Add filter toolbar
         //$this->render_filter_toolbar = true;
 
-        $this->searchOpDateRange('a.date', $from_date, $to_date);
+        //$this->searchOpDateRange('a.date', $from_date, $to_date);
     }
 
 

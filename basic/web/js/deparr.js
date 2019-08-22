@@ -171,9 +171,29 @@ function openMyOrder(id) {
     });
 }
 
+function delMyOrder(id) {
+    var url = '/departures-arrivals/delmyorder';
+    //var modalContainer = $('#my-modal');
+    //var modalBody = modalContainer.find('.modal-body');
+    //modalContainer.modal({show:true});
+    $.ajax({
+        url: url,
+        async: true,
+        type: "POST",
+        data: {'id':id},
+        success: function (data) {
+            //$('.modal-body').html(data);
+            //modalContainer.modal({show:true});
+            window.location.reload();
+        }
+    });
+}
+
 $(document).ready(function () {
 
     $('span.kv-field-seperator').text('до');
+    $('.ui-pg-table').hide();
+    $('.ui-paging-info').hide();
 
     $('.new-client').click(function(event){ // нажатие на кнопку - выпадает модальное окно
         event.preventDefault();

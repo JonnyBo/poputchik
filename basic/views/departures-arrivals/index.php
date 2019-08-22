@@ -96,17 +96,27 @@ if (Yii::$app->user->can('driver')) {
     <div class="filter">
         <div class="col-lg-6">
         <?php $form = ActiveForm::begin(['action' => '/departures-arrivals/index', 'method' => 'get']); ?>
+            <?php
+            $from_date = $to_date = date('d.m.Y');
+            if ($_GET['from_date']) {
+                $from_date = strip_tags(trim($_GET['from_date']));
+            }
+            if ($_GET['to_date']) {
+                $to_date = strip_tags(trim($_GET['to_date']));
+            }
+            ?>
             <div class="col-xs-10">
             <?= DatePicker::widget([
                 'name' => 'from_date',
-                'value' => $_GET['from_date'],
+                'value' => $from_date,
                 'type' => DatePicker::TYPE_RANGE,
                 'name2' => 'to_date',
-                'value2' => $_GET['to_date'],
+                'value2' => $to_date,
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'dd.mm.yyyy'
-                ]
+                ],
+                'language' => 'ru-RU',
             ]); ?>
             </div>
             <div class="col-xs-2">

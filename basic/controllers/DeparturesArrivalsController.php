@@ -86,6 +86,8 @@ class DeparturesArrivalsController extends Controller
             $from_date = Yii::$app->formatter->asDatetime($from_date, 'php:Y-m-d');
             $to_date = Yii::$app->formatter->asDatetime($to_date, 'php:Y-m-d');
             $where = ['between', 'date', $from_date, $to_date];
+        } else {
+            $where = ['between', 'date', date('Y-m-d'), date('Y-m-d')];
         }
         $driver = Drivers::find()->where(['user_id' => Yii::$app->user->getId()])->one();
         $userRole = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
@@ -93,7 +95,7 @@ class DeparturesArrivalsController extends Controller
         $departures = Arrivals::find()->where(['type' => 'departures', 'driver_id' => 0])->orWhere(['type' => 'departures', 'driver_id' => $driver['id']])->andWhere($where)->orderBy(['date' => SORT_DESC])->all();
 
         $dataProvider_left = new ArrayDataProvider([
-            'allModels' => $arrivals,
+            'allModels' => $departures,
             'sort' => [
                 'attributes' => [
                     'date'
@@ -104,7 +106,7 @@ class DeparturesArrivalsController extends Controller
             ],
         ]);
         $dataProvider_right = new ArrayDataProvider([
-            'allModels' => $departures,
+            'allModels' => $arrivals,
             'sort' => [
                 'attributes' => ['date'],
             ],
@@ -223,6 +225,31 @@ class DeparturesArrivalsController extends Controller
             'model' => $arrival,
             'client' => $client
         ]);
+    }
+
+    // Всплывшее модальное окно заказа водителем
+    public function actionDelmyorder()
+    {
+        $id = intval(Yii::$app->request->post('id'));
+        $arrival = Arrivals::findOne($id);
+        //$driver = Drivers::findByUserId();
+        Yii::$app->db->createCommand()->update('arrivals', ['driver_id' => 0], 'id = '.$arrival->id)->execute();
+        /*
+        $where = ['driver_id' => 0];
+        $departures = [];
+        if ($arrival->type == 'arrivals') {
+            //$where = ['between', 'date', $arrival->date, date('Y-m-d H:i:s', strtotime($arrival->date . ' +1 day'))];
+            $departures = Arrivals::find()->where(['type' => 'departures'])->andWhere($where)->orderBy(['date' => SORT_ASC])->all();
+
+        }
+        */
+        /*
+        return $this->renderAjax('myorder', [
+            'model' => $arrival,
+            'client' => $client
+        ]);
+        */
+        echo 'ok';
     }
 
     // Всплывшее модальное окно принятия заказа водителем

@@ -22,13 +22,15 @@ use yii\web\JsExpression;
     <h3>Новый заказ клиента</h3>
     <?php //print_r($model); ?>
     <!--div class="form-group">
-    <?= Html::radio('type', true, ['label' => 'Прилеты', 'value' => 'departures']) ?>
+
     <?= Html::radio('type', false, ['label' => 'Вылеты', 'value' => 'arrivals']) ?>
+    <?= Html::radio('type', true, ['label' => 'Прилеты', 'value' => 'departures']) ?>
     </div-->
 
     <?= $form->field($model, 'type')->label('')->radioList([
-        'departures' =>'Прилеты',
-        'arrivals' =>'Вылеты'
+        'arrivals' =>'Вылеты',
+        'departures' =>'Прилеты'
+
     ])
     ?>
 

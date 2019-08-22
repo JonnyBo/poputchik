@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.5
+-- version 5.0.0-dev
 -- https://www.phpmyadmin.net/
 --
--- Хост: localhost
--- Время создания: Фев 04 2019 г., 17:09
--- Версия сервера: 5.7.20
--- Версия PHP: 7.1.12
+-- Host: localhost
+-- Generation Time: Aug 21, 2019 at 11:01 AM
+-- Server version: 5.7.20
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `poputchik`
+-- Database: `poputchik`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `analytics_phone`
+-- Table structure for table `analytics_phone`
 --
 
 CREATE TABLE `analytics_phone` (
@@ -40,7 +40,7 @@ CREATE TABLE `analytics_phone` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `analytics_phone`
+-- Dumping data for table `analytics_phone`
 --
 
 INSERT INTO `analytics_phone` (`id`, `number_a`, `number_b`, `date_start`, `date_connect`, `date_end`, `call_direction`, `comment`) VALUES
@@ -10077,7 +10077,32 @@ INSERT INTO `analytics_phone` (`id`, `number_a`, `number_b`, `date_start`, `date
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `arrivals`
+-- Table structure for table `apps`
+--
+
+CREATE TABLE `apps` (
+  `id` int(11) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `place_from` varchar(100) DEFAULT NULL,
+  `place_to` varchar(100) DEFAULT NULL,
+  `quantity` int(11) NOT NULL DEFAULT '0',
+  `type` varchar(100) DEFAULT NULL,
+  `date_order` date DEFAULT NULL,
+  `driver_id` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `apps`
+--
+
+INSERT INTO `apps` (`id`, `date`, `place_from`, `place_to`, `quantity`, `type`, `date_order`, `driver_id`) VALUES
+(9, '2019-03-21 14:03:00', 'Домодедово', 'Иваново', 3, 'departures', '2019-03-21', 1),
+(10, '2019-03-21 14:04:00', 'Иваново', 'Внуково', 11, 'arrivals', '2019-03-21', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `arrivals`
 --
 
 CREATE TABLE `arrivals` (
@@ -10089,42 +10114,139 @@ CREATE TABLE `arrivals` (
   `client_id` int(11) NOT NULL DEFAULT '0',
   `price` decimal(10,0) NOT NULL DEFAULT '0',
   `flight_number` varchar(100) DEFAULT NULL,
-  `driver_id` int(11) NOT NULL DEFAULT '0'
+  `driver_id` int(11) NOT NULL DEFAULT '0',
+  `type` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `arrivals`
+-- Dumping data for table `arrivals`
 --
 
-INSERT INTO `arrivals` (`id`, `date`, `departure_point`, `arrival_point`, `quantity`, `client_id`, `price`, `flight_number`, `driver_id`) VALUES
-(2, '2019-01-08 08:15:10', 'Внуково', 'Иваново', 15, 2, '20000', '33333-444444', 2);
+INSERT INTO `arrivals` (`id`, `date`, `departure_point`, `arrival_point`, `quantity`, `client_id`, `price`, `flight_number`, `driver_id`, `type`) VALUES
+(2, '2019-01-08 08:15:10', 'Внуково', 'Иваново', 15, 1, '20000', '33333-444444', 0, 'departures'),
+(3, '2019-02-28 16:50:00', 'ttttttttttttt', 'qqqqqqqqqqq', 10, 1, '5400', '111111', 0, 'departures'),
+(4, '2019-01-08 08:15:10', 'Внуково', 'Иваново', 15, 1, '20000', '33333-444444', 0, 'arrivals'),
+(6, '2019-02-28 16:50:00', 'ttttttttttttt', 'qqqqqqqqqqq', 10, 1, '5400', '22222', 0, 'departures'),
+(7, '2019-02-28 11:35:00', 'ttttttttttttt', 'qqqqqqqqqqq', 10, 1, '5400', 'frt6543', 0, 'arrivals'),
+(8, '2019-02-25 17:23:00', 'Домодедово', 'Иваново', 6, 2, '3000', 'frt6543111', 0, 'departures'),
+(9, '2019-02-18 08:31:00', 'Иваново', 'Внуково', 7, 2, '6000', 'frt65432554', 0, 'arrivals'),
+(10, '2019-02-12 04:47:00', 'Иваново', 'Внуково', 10, 1, '5400', 'frt654374', 0, 'arrivals'),
+(11, '2019-02-26 03:06:00', 'Иваново', 'Внуково', 10, 1, '5400', 'frt654312', 0, 'departures'),
+(12, '2019-02-27 12:03:00', 'Иваново', 'Внуково', 7, 2, '6000', 'frt6543744545', 0, 'arrivals'),
+(13, '2019-02-25 21:50:00', 'ttttttttttttt', 'Внуково', 7, 1, '5400', 'frt65437411', 0, 'departures'),
+(14, '2019-02-07 13:25:00', 'ttttttttttttt', 'Внуково', 10, 3, '5400', 'frt65432554', 0, 'arrivals');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `clients`
+-- Table structure for table `auth_assignment`
+--
+
+CREATE TABLE `auth_assignment` (
+  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
+('admin', '1', 1554198848),
+('driver', '10', 1558360156),
+('driver', '11', 1558360773),
+('driver', '12', 1558361475),
+('driver', '2', 1554198875),
+('driver', '3', 1554198875),
+('driver', '4', 1554972159),
+('driver', '5', 1554972159),
+('driver', '6', 1554972159),
+('driver', '7', 1554972159);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item`
+--
+
+CREATE TABLE `auth_item` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` smallint(6) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` blob,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item`
+--
+
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('admin', 1, 'Администратор', NULL, NULL, 1554198001, 1554198001),
+('client', 1, 'Клиент', NULL, NULL, 1554198001, 1554198001),
+('driver', 1, 'Водитель', NULL, NULL, 1554198001, 1554198001),
+('manager', 1, 'Менеджер', NULL, NULL, 1554198001, 1554198001);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item_child`
+--
+
+CREATE TABLE `auth_item_child` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_rule`
+--
+
+CREATE TABLE `auth_rule` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `data` blob,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
 --
 
 CREATE TABLE `clients` (
   `id` int(11) NOT NULL,
   `login` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
-  `first_name` varchar(100) DEFAULT NULL,
-  `second_name` varchar(100) DEFAULT NULL,
-  `family` varchar(100) DEFAULT NULL
+  `name` tinytext,
+  `company` tinytext,
+  `phone` varchar(100) DEFAULT NULL,
+  `add_phone` varchar(100) DEFAULT NULL,
+  `created` date DEFAULT NULL,
+  `blocked` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `clients`
+-- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`id`, `login`, `password`, `first_name`, `second_name`, `family`) VALUES
-(1, '111111', '222222222', 'Иван', 'Петрович', 'Сидоров');
+INSERT INTO `clients` (`id`, `login`, `password`, `name`, `company`, `phone`, `add_phone`, `created`, `blocked`) VALUES
+(1, '111111', '222222222', 'Иван Сидоров', 'ООО Меридиан', '22222222222222', '333333333333', '2019-02-17', 0),
+(2, '', '', 'Петр Петров', 'ИП Иванов', '5555555555', '', '2019-02-11', 0),
+(3, NULL, NULL, 'yyyyyyyyyyyyy', 'wwwwwwwwww', '33333333333', NULL, '2019-02-22', 0),
+(4, NULL, NULL, 'Сергей Безруков', 'ООО Инвест-Холдинг', '222-333-22-55', '333-444-55-66', '2019-03-21', 0),
+(6, NULL, NULL, 'Петр Петров', 'ИП Иванов', '4444444444444', '333-444-55-66', '2019-03-21', 0);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `departures`
+-- Table structure for table `departures`
 --
 
 CREATE TABLE `departures` (
@@ -10140,43 +10262,106 @@ CREATE TABLE `departures` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `departures`
+-- Dumping data for table `departures`
 --
 
 INSERT INTO `departures` (`id`, `date`, `departure_point`, `arrival_point`, `quantity`, `client_id`, `price`, `flight_number`, `driver_id`) VALUES
 (1, '2019-01-06 04:25:42', 'Иваново', 'Домодедово', 6, 1, '15000', '222-333', 1),
-(2, '2019-01-08 08:15:10', 'Иваново', 'ВНУКОВО', 15, 2, '20000', '33333-444444', 2);
+(2, '2019-01-08 08:15:10', 'Иваново', 'ВНУКОВО', 15, 1, '20000', '33333-444444', 2),
+(3, '2019-02-11 04:24:00', 'ttttttttt', 'wwwwww1', 12, 1, '5600', '44444444', 0),
+(4, NULL, 'ttttttttt', 'wwwwww1', 5, 1, '4800', '44444444', 0);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `drivers`
+-- Table structure for table `drivers`
 --
 
 CREATE TABLE `drivers` (
   `id` int(11) NOT NULL,
-  `login` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `first_name` varchar(100) DEFAULT NULL,
-  `second_name` varchar(100) DEFAULT NULL,
-  `family` varchar(100) DEFAULT NULL,
+  `name` tinytext,
+  `phone` varchar(100) DEFAULT NULL,
+  `auto_color` varchar(100) DEFAULT NULL,
   `auto_model` varchar(100) DEFAULT NULL,
   `auto_number` varchar(100) DEFAULT NULL,
-  `places` int(11) NOT NULL DEFAULT '0'
+  `places` int(11) NOT NULL DEFAULT '0',
+  `created` date DEFAULT NULL,
+  `blocked` tinyint(1) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
+  `login` varchar(250) DEFAULT NULL,
+  `password` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `drivers`
+-- Dumping data for table `drivers`
 --
 
-INSERT INTO `drivers` (`id`, `login`, `password`, `first_name`, `second_name`, `family`, `auto_model`, `auto_number`, `places`) VALUES
-(1, '111', '222', 'Иван', 'Иванович', 'Иванов', 'Газель', 'а345ва37', 12),
-(2, '222', '333', 'Петр', 'Петрович', 'Петров', 'Мерседес  ', 'к222вы37', 10);
+INSERT INTO `drivers` (`id`, `name`, `phone`, `auto_color`, `auto_model`, `auto_number`, `places`, `created`, `blocked`, `user_id`, `login`, `password`) VALUES
+(1, 'Иван Иванов', '2222222222222', 'серебристый', 'Газель', 'а345ва37', 12, '2019-02-04', 0, 2, NULL, NULL),
+(2, 'Петр Петров', '33333', 'чёрный', 'Мерседес  ', 'к222вы37', 16, '2012-02-20', 0, 3, NULL, NULL),
+(3, 'Виктор Сидоров', '6666666666', 'белый', 'Форд', '3333333333', 12, '2022-02-20', 0, 4, NULL, NULL),
+(4, 'Николай Сидоров', '434343', 'зеленый', 'Форд', '3333333333', 12, '2019-02-22', 0, 5, NULL, NULL),
+(5, 'Сергей Иванов', '3333333333', 'красный', 'газель', '223344', 12, '2019-02-27', 0, 6, NULL, NULL),
+(6, 'Иван Викторов', '3333333333333', 'красный', 'Форд', '223344', 12, '2019-03-21', 0, 7, NULL, NULL),
+(11, '55555', '55555', '55555', '55555', '55555', 12, '2019-05-20', 0, 10, '55555', '55555'),
+(12, '222', '222', '222', '222', '222', 22, '2019-05-20', 0, 11, '222', '222'),
+(13, '333', '333', '333', '333', '333', 11, '2019-05-20', 0, 12, '333', '333');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `orders`
+-- Table structure for table `driver_apps`
+--
+
+CREATE TABLE `driver_apps` (
+  `id` int(11) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `order_id` int(11) NOT NULL DEFAULT '0',
+  `driver_id` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `driver_apps`
+--
+
+INSERT INTO `driver_apps` (`id`, `date`, `order_id`, `driver_id`) VALUES
+(1, '2019-04-18 14:58:19', 7, 2),
+(4, '2019-04-18 16:09:58', 13, 2),
+(5, '2019-04-18 16:10:34', 7, 1),
+(7, '2019-04-18 16:10:46', 2, 1),
+(9, '2019-04-18 16:11:25', 7, 6),
+(11, '2019-04-18 16:11:32', 11, 6),
+(13, '2019-04-19 16:53:50', 9, 1),
+(14, '2019-04-19 16:53:50', 13, 1),
+(15, '2019-05-13 13:28:40', 14, 1),
+(16, '2019-05-13 13:28:40', 13, 1),
+(17, '2019-05-13 13:28:51', 10, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migration`
+--
+
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1554196139),
+('m140506_102106_rbac_init', 1554196849),
+('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1554196849),
+('m180523_151638_rbac_updates_indexes_without_prefix', 1554196849);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
 --
 
 CREATE TABLE `orders` (
@@ -10186,21 +10371,93 @@ CREATE TABLE `orders` (
   `place_from` varchar(100) DEFAULT NULL,
   `place_to` varchar(100) DEFAULT NULL,
   `quantity` int(11) NOT NULL DEFAULT '0',
-  `price` decimal(10,0) NOT NULL DEFAULT '0'
+  `price` decimal(10,0) NOT NULL DEFAULT '0',
+  `client_id` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Индексы сохранённых таблиц
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `date`, `flight_number`, `place_from`, `place_to`, `quantity`, `price`, `client_id`) VALUES
+(1, NULL, 'ееееее', '333333333', '222222222', 12, '4500', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rounds`
+--
+
+CREATE TABLE `rounds` (
+  `id` int(11) NOT NULL,
+  `arrival_id` int(11) NOT NULL DEFAULT '0',
+  `departure_id` int(11) NOT NULL DEFAULT '0',
+  `driver_id` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `rounds`
+--
+
+INSERT INTO `rounds` (`id`, `arrival_id`, `departure_id`, `driver_id`) VALUES
+(6, 12, 13, 2),
+(7, 12, 2, 1),
+(8, 12, 11, 6),
+(9, 9, 13, 1),
+(10, 7, 6, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `auth_key` varchar(32) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `password_reset_token` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '10',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'dR0gi9DhIiqroDH66YefhhMe_xdZvFwI', '$2y$13$qvkCKST3toT6AuHyUgGIMeQX3fJz.FVIKdqwlgmVGCXuU9lUrovBu', NULL, 'admin@poputchik.ru', 10, 1554966245, 1554966245),
+(2, 'driver1', 'ZJ4VuH7ki3xGqCjJE62pORIiRfCbiE_v', '$2y$13$WlaYfct5NTs9CZbu/SEW5eoMnfBVTb2O6CVJYrYv8qlR4P78jet8m', NULL, 'driver1@poputchik.ru', 10, 1554967593, 1554967593),
+(3, 'driver2', 'MhJFGPJOUlsOCumZIuPUNqgZS0HBUbQz', '$2y$13$vvACFWsDXgo8Rdn9zb5DcujG4vbpKw4a23Fx2qGn0TJmhNDYlLVr.', NULL, 'driver2@poputchik.ru', 10, 1554967594, 1554967594),
+(4, 'driver3', 'c01sVfStgOmfzdAa-0yH87NMyCDl91nl', '$2y$13$MSRjC/tkv8.DeC3NB9SBo.jIlrL.zsQliVZZaXOzaGDEYkmUNy0DW', NULL, 'driver3@poputchik.ru', 10, 1554967594, 1554967594),
+(5, 'driver4', 'MGqNYqQIJCBdW3cgoCtmqsh33gxGqq7b', '$2y$13$u/BBw1jvId.xvrk1cnaB7ujt3i5Nc3mI5ta9Ny8YniO0spqwla2Cq', NULL, 'driver4@poputchik.ru', 10, 1554967595, 1554967595),
+(6, 'driver5', 'g9PQrnMsHz6Cp1AYgshpsFZf0dfZqwKg', '$2y$13$CYNUgAObsoEMzsfwZe1Qe.cEEASVwSEKH5QO2jWFLMTm6pk7ROyie', NULL, 'driver5@poputchik.ru', 10, 1554967595, 1554967595),
+(7, 'driver6', 'UD4tnIZc1H9Zj0TbPKT6OWkgCRh2Z-i_', '$2y$13$d.FkPm46jfhNkdQK3msgmOtp5wuTXtFchtl5..X4iV7FxI40Ivp0O', NULL, 'driver6@poputchik.ru', 10, 1554967596, 1554967596),
+(10, '55555', 'HRBWJUbq-hDU_flB4Ly-eJpzKu1kK1f_', '$2y$13$ONY46f4xqcpWUvtmKomB/.lYQN./cpzzPdgRNbrJ9mupsLjr5IY6e', NULL, '55555@poputchik.ru', 10, 1558360156, 1558360156),
+(11, '222', 'rGYolO8H8VB5sxnMqio2d61RREXEGVoB', '$2y$13$Y9hlCMkjIoOxBWeM4Y6sVuOkYQ7AF9SMziXAmVNc6SFOsJEovASYW', NULL, '', 10, 1558360773, 1558360773),
+(12, '333', '2Qi0Jmp5cgke9u9eBUGOV5ufxuZTzWLV', '$2y$13$TqfvEHiYfXevD67vmf/HX.BIKzqKyUXRfbIdhSZldihykFxbO8S8W', NULL, '', 10, 1558361475, 1558361475);
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `analytics_phone`
+-- Indexes for table `analytics_phone`
 --
 ALTER TABLE `analytics_phone`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `arrivals`
+-- Indexes for table `apps`
+--
+ALTER TABLE `apps`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `arrivals`
 --
 ALTER TABLE `arrivals`
   ADD PRIMARY KEY (`id`),
@@ -10212,13 +10469,41 @@ ALTER TABLE `arrivals`
   ADD KEY `driver_id` (`driver_id`);
 
 --
--- Индексы таблицы `clients`
+-- Indexes for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD PRIMARY KEY (`item_name`,`user_id`),
+  ADD KEY `idx-auth_assignment-user_id` (`user_id`);
+
+--
+-- Indexes for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD PRIMARY KEY (`name`),
+  ADD KEY `rule_name` (`rule_name`),
+  ADD KEY `idx-auth_item-type` (`type`);
+
+--
+-- Indexes for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD PRIMARY KEY (`parent`,`child`),
+  ADD KEY `child` (`child`);
+
+--
+-- Indexes for table `auth_rule`
+--
+ALTER TABLE `auth_rule`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- Indexes for table `clients`
 --
 ALTER TABLE `clients`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `departures`
+-- Indexes for table `departures`
 --
 ALTER TABLE `departures`
   ADD PRIMARY KEY (`id`),
@@ -10230,56 +10515,124 @@ ALTER TABLE `departures`
   ADD KEY `driver_id` (`driver_id`);
 
 --
--- Индексы таблицы `drivers`
+-- Indexes for table `drivers`
 --
 ALTER TABLE `drivers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `orders`
+-- Indexes for table `driver_apps`
+--
+ALTER TABLE `driver_apps`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migration`
+--
+ALTER TABLE `migration`
+  ADD PRIMARY KEY (`version`);
+
+--
+-- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- Indexes for table `rounds`
+--
+ALTER TABLE `rounds`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `arrival_id` (`arrival_id`),
+  ADD KEY `departure_id` (`departure_id`),
+  ADD KEY `driver_id` (`driver_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `analytics_phone`
+-- AUTO_INCREMENT for table `analytics_phone`
 --
 ALTER TABLE `analytics_phone`
   MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70063;
 
 --
--- AUTO_INCREMENT для таблицы `arrivals`
+-- AUTO_INCREMENT for table `apps`
 --
-ALTER TABLE `arrivals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `apps`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблицы `clients`
+-- AUTO_INCREMENT for table `arrivals`
+--
+ALTER TABLE `arrivals`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `departures`
+--
+ALTER TABLE `departures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `drivers`
+--
+ALTER TABLE `drivers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `driver_apps`
+--
+ALTER TABLE `driver_apps`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT для таблицы `departures`
+-- AUTO_INCREMENT for table `rounds`
 --
-ALTER TABLE `departures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `rounds`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблицы `drivers`
+-- AUTO_INCREMENT for table `user`
 --
-ALTER TABLE `drivers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT для таблицы `orders`
+-- Constraints for dumped tables
 --
-ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

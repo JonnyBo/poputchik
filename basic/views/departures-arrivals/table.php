@@ -69,17 +69,27 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
     <div class="filter">
         <div class="col-lg-6">
             <?php $form = ActiveForm::begin(['action' => '/departures-arrivals/table', 'method' => 'get']); ?>
+            <?php
+            $from_date = $to_date = date('d.m.Y');
+            if ($_GET['from_date']) {
+                $from_date = strip_tags(trim($_GET['from_date']));
+            }
+            if ($_GET['to_date']) {
+                $to_date = strip_tags(trim($_GET['to_date']));
+            }
+            ?>
             <div class="col-xs-8">
                 <?= DatePicker::widget([
                     'name' => 'from_date',
-                    'value' => $_GET['from_date'],
+                    'value' => $from_date,
                     'type' => DatePicker::TYPE_RANGE,
                     'name2' => 'to_date',
-                    'value2' => $_GET['to_date'],
+                    'value2' => $to_date,
                     'pluginOptions' => [
                         'autoclose' => true,
                         'format' => 'dd.mm.yyyy'
-                    ]
+                    ],
+                    'language' => 'ru-RU',
                 ]); ?>
             </div>
             <div class="col-xs-4">
@@ -198,7 +208,7 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                             }
                             return Html::button('Беру', ['class' => 'btn btn-success btn-xs', 'onclick' => 'openDriverOrder("'.$arrivals->id.'");']);
                         } elseif ($arrivals->driver_id == $driver['id']) {
-                            return Html::button('Взята', ['class' => 'btn btn-primary btn-xs', 'onclick' => 'openMyOrder("'.$arrivals->id.'");']);
+                            return Html::button('Взята', ['class' => 'btn btn-primary btn-xs', 'onclick' => 'openMyOrder("'.$arrivals->id.'");']).Html::button('Отказаться', ['class' => 'btn btn-danger btn-xs', 'onclick' => 'delMyOrder("'.$arrivals->id.'");']);
                         }
                     },
                 ],
@@ -219,7 +229,7 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
                             }
                             return Html::button('Беру', ['class' => 'btn btn-success btn-xs', 'onclick' => 'openDriverOrder("'.$departures->id.'");']);
                         } elseif ($departures->driver_id == $driver['id']) {
-                            return Html::button('Взята', ['class' => 'btn btn-primary btn-xs', 'onclick' => 'openMyOrder("'.$departures->id.'");']);
+                            return Html::button('Взята', ['class' => 'btn btn-primary btn-xs', 'onclick' => 'openMyOrder("'.$departures->id.'");']).Html::button('Отказаться', ['class' => 'btn btn-danger btn-xs', 'onclick' => 'delMyOrder("'.$departures->id.'");']);
                         }
                     },
                 ],

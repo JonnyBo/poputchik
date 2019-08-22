@@ -98,10 +98,10 @@ if (Yii::$app->user->can('driver')) {
         <?php $form = ActiveForm::begin(['action' => '/departures-arrivals/index', 'method' => 'get']); ?>
             <?php
             $from_date = $to_date = date('d.m.Y');
-            if ($_GET['from_date']) {
+            if (!empty($_GET['from_date'])) {
                 $from_date = strip_tags(trim($_GET['from_date']));
             }
-            if ($_GET['to_date']) {
+            if (!empty($_GET['to_date'])) {
                 $to_date = strip_tags(trim($_GET['to_date']));
             }
             ?>

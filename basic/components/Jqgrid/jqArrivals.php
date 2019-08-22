@@ -54,30 +54,21 @@ class jqArrivals extends jqGrid
             ),
         );
 
-        //$this->from_date = date('d.m.Y');
-
-        //print_r($_GET);
-
-        $this->from_date = $_GET['from_date'];
-        $this->to_date = Yii::$app->request->get('to_date');
-        if ($this->from_date) {
-            $this->from_date = Yii::$app->formatter->asDatetime($this->from_date, 'php:Y-m-d');
-            //$this->where[] = "a.date >= $from_date";
+        $from_date = date('d.m.Y');
+        $to_date = date('d.m.Y');
+        if (Yii::$app->request->get('from_date')) {
+            $from_date = Yii::$app->request->get('from_date');
         }
-        if ($this->to_date) {
-            $this->to_date = Yii::$app->formatter->asDatetime($this->to_date, 'php:Y-m-d');
-            //$this->where[] = "a.date <= $to_date";
+        $from_date = Yii::$app->formatter->asDatetime($from_date, 'php:Y-m-d');
+
+        if (Yii::$app->request->get('to_date')) {
+            $to_date = Yii::$app->request->get('to_date');
         }
+        $to_date = Yii::$app->formatter->asDatetime($to_date, 'php:Y-m-d');
 
         $this->where[] = "a.type = 'arrivals'";
 
-        //$this->where[] = "a.date = '2019-02-12'";
-
-        //$this->where[] = "a.date BETWEEN '$this->from_date' AND '$this->to_date'";
-
-        //$mywhere = implode(' AND ', $this->where);
-
-        //echo $from_date;
+        $this->where[] = "a.date BETWEEN '$from_date' AND '$to_date'";
 
         $this->query = "
             SELECT {fields}
@@ -85,10 +76,6 @@ class jqArrivals extends jqGrid
                 JOIN clients c ON (a.client_id=c.id)
             WHERE {where}
         ";
-
-        //echo $this->query;
-
-        //print_r($this->where);
 
         #Set columns
         $this->cols = array(

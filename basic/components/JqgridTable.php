@@ -54,10 +54,11 @@ class JqgridTable extends Component
 
         //$grid = 'jqDepartures';
 
-        $rendered_grid = $jq_loader->render($grid);
+        $rendered_grid = $jq_loader->render($grid, Yii::$app->request->get());
 
         //print_r($rendered_grid);
 
+        //print_r(Yii::$app->request->get());
 
         $js = "<script>
         {$rendered_grid}

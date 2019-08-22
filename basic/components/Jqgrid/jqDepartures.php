@@ -56,7 +56,21 @@ class jqDepartures extends jqGrid
             ),
         );
 
+        $from_date = date('d.m.Y');
+        $to_date = date('d.m.Y');
+        if (Yii::$app->request->get('from_date')) {
+            $from_date = Yii::$app->request->get('from_date');
+        }
+        $from_date = Yii::$app->formatter->asDatetime($from_date, 'php:Y-m-d');
+
+        if (Yii::$app->request->get('to_date')) {
+            $to_date = Yii::$app->request->get('to_date');
+        }
+        $to_date = Yii::$app->formatter->asDatetime($to_date, 'php:Y-m-d');
+
         $this->where[] = "a.type = 'departures'";
+
+        $this->where[] = "a.date BETWEEN '$from_date' AND '$to_date'";
 
         $this->query = "
             SELECT {fields}

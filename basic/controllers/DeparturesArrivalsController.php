@@ -292,6 +292,7 @@ class DeparturesArrivalsController extends Controller
         $driver = Drivers::findByUserId();
         $round_id = intval(Yii::$app->request->post('use'));
         //пишем в предзаказы
+
         Yii::$app->db->createCommand()->insert('driver_apps', [
             'date' => date('Y-m-d H:i:s'),
             'order_id' => $arrival_id,

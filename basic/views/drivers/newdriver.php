@@ -33,9 +33,13 @@ use yii\web\JsExpression;
 
     <?= $form->field($model, 'auto_number')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 
-    <?= $form->field($model, 'auto_color')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 
     <?= $form->field($model, 'places')->textInput(['type' => 'number'], ['class' => 'input-modal']) ?>
+    
+    <?= $form->field($model, 'adress')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
+    
+    <?= $form->field($model, 'comment')->textInput(['maxlength' => 255], ['class' => 'input-modal']) ?>
 
     <div class="form-group">
     <?= '<label class="control-label">Дата</label>'; ?>

@@ -21,8 +21,8 @@ class JqgridTable extends Component
 
             'encoding' => 'utf-8',
             'pdo_dsn' => 'mysql:dbname=poputchik;localhost',
-            'pdo_user' => 'poputchik',
-            'pdo_pass' => 'bydfkbl',
+            'pdo_user' => 'root',
+            'pdo_pass' => '',
         );
         return $_CONFIG;
     }

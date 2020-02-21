@@ -35,7 +35,7 @@ $this->registerJsFile('/jqGrid/highlightjs/6.0/highlight.min.js', ['position' =>
 $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
 
 // JS
-
+//$this->registerJsFile('/js/analytics-phone/index.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 
 
 
@@ -53,10 +53,10 @@ $this->registerCssFile('/jqGrid/highlightjs/6.0/styles/vs.css');
 
             ridview: true,
             viewrecords: true,
-            scrollOffset: 21,
+            scrollOffset: 100,
 
             width: 900,
-            height: 290
+            height: 600
         });
 
     //$.jgrid.defaults.height = '400px';

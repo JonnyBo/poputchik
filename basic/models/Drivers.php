@@ -34,8 +34,8 @@ class Drivers extends \yii\db\ActiveRecord
     {
         return [
             [['places', 'id'], 'integer'],
-            [['login', 'password', 'phone', 'auto_color', 'auto_model', 'auto_number'], 'string', 'max' => 100],
-            [['name'], 'string'],
+            [['login', 'password', 'phone', 'email', 'auto_model', 'auto_number', 'comment'], 'string', 'max' => 250],
+            [['name', 'firstname'], 'string'],
             [['created'], 'safe'],
         ];
     }
@@ -51,13 +51,17 @@ class Drivers extends \yii\db\ActiveRecord
             'login' => 'Логин',
             'password' => 'Пароль',
             'name' => 'Водитель',
+            'firstname' => 'Водитель',
+            'adress' => 'Адрес',
             'phone' => 'Телефон',
-            'auto_color' => 'Цвет авто',
+            'email' => 'Договор',
             'auto_model' => 'Модель авто',
             'auto_number' => 'Номер авто',
             'places' => 'Кол-во мест',
             'created' => 'Дата регистрации',
-            'blocked' => 'Заблокирован'
+            'blocked' => 'Заблокирован',
+            'unreliable' => 'Ненадежный',
+            'comment' => 'Комментарий',
         ];
     }
 

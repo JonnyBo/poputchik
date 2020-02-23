@@ -167,3 +167,9 @@ a.desc:after {
 .act-driver {cursor: pointer; display: inline-block; position: relative; z-index: 101;}
 
 .table{font-size: 12px;}
+.table thead th { background-color: rgba(29,150,178,1); border: 1px solid rgba(29,150,178,1); font-weight: normal; text-align: center; color: white;}
+.table thead th a {color: #ffffff; text-decoration: none;}
+
+.prow.free {background-color: #ffffff;}
+.prow.sel {background-color: #ffee99 !important;}
+

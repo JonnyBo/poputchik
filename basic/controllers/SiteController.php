@@ -86,9 +86,48 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        //echo Yii::$app->formatter->asDate('22.02.2019 14:11:00', 'php:Y-m-d H:i:s');
-        //$userRole = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
-        //print_r($userRole);
+        $from_date = Yii::$app->request->get('from_date', false);
+        $to_date = Yii::$app->request->get('to_date', false);
+        $where = [];
+        if ($from_date && $to_date) {
+            $from_date = Yii::$app->formatter->asDatetime($from_date, 'php:Y-m-d');
+            $to_date = Yii::$app->formatter->asDatetime($to_date, 'php:Y-m-d');
+            $where = ['between', 'date', $from_date, $to_date];
+        } else {
+            //$where = ['between', 'date', date('Y-m-d'), date('Y-m-d')];
+        }
+        //$driver = Drivers::find()->where(['user_id' => Yii::$app->user->getId()])->one();
+        $userRole = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
+        $arrivals = Arrivals::find()->where(['type' => 'arrivals'])->andWhere($where)->orderBy(['date' => SORT_DESC])->all();
+        $departures = Arrivals::find()->where(['type' => 'departures'])->andWhere($where)->orderBy(['date' => SORT_DESC])->all();
+
+        $dataProvider_left = new ArrayDataProvider([
+            'allModels' => $departures,
+            'sort' => [
+                'attributes' => [
+                    'date'
+                ],
+            ],
+            'pagination' => [
+                'pageSize' => 200
+            ],
+        ]);
+        $dataProvider_right = new ArrayDataProvider([
+            'allModels' => $arrivals,
+            'sort' => [
+                'attributes' => ['date'],
+            ],
+            'pagination' => [
+                'pageSize' => 200
+            ],
+        ]);
+        return $this->render('index_admin', [
+            'dataProvider_left' => $dataProvider_left,
+            'dataProvider_right' => $dataProvider_right,
+            'arrivals' => $arrivals,
+            'departures' => $departures,
+            'userRole' => $userRole
+        ]);
         return $this->render('index');
     }
 

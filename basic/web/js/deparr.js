@@ -616,6 +616,14 @@ $(document).ready(function () {
         });
     });
 
+    $('.prow td').click(function () {
+        $('.prow').removeClass('sel');
+        $(this).parent('.prow').addClass('sel');
+    });
 
+    $('.prow td').dblclick(function () {
+        let idn = $(this).parent('.prow').data('id');
+        alert(idn);
+    });
 
 });

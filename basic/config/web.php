@@ -45,16 +45,18 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        /*
         'assetManager' => [
             'bundles' => [
                 // you can override AssetBundle configs here
                 'yii\web\JqueryAsset' => [
                     'sourcePath' => null,
-                    'js' => ['//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js']
+                    //'js' => ['//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js']
 //                    'js' => []
                 ],
             ],
         ],
+        */
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             //'cache' => 'cache' //Включаем кеширование

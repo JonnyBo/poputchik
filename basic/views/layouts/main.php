@@ -25,7 +25,9 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+    <header>
     <?php
+    /*
     NavBar::begin([
         'brandLabel' => 'Попутчик',
         'brandUrl' => Yii::$app->homeUrl,
@@ -33,13 +35,21 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    */
+    NavBar::begin([
+        'brandLabel' => Html::img('@web/images/logo.png', ['alt'=>Yii::$app->name,'class'=>'plogo-image']),
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => [
+            'class' => 'navbar navbar-fixed-top',
+        ],
+    ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Главная', 'url' => ['/site/index']],
-            /*['label' => 'О нас', 'url' => ['/site/about']],
+            /*['label' => 'Главная', 'url' => ['/site/index']],
+            ['label' => 'О нас', 'url' => ['/site/about']],
             ['label' => 'Контакты', 'url' => ['/site/contact']],*/
-            ['label' => 'Прилеты/Вылеты', 'url' => ['/departures-arrivals/index'],
+            ['label' => 'Прилеты/Вылеты', 'url' => ['/departures-arrivals/'],
                 'access' => [
                     'class' => \yii\filters\AccessControl::className(),
                     'rules' => [
@@ -56,7 +66,7 @@ AppAsset::register($this);
                     ],
                 ],
             ],
-            ['label' => 'Водители', 'url' => ['/drivers/index'],
+            ['label' => 'Водители', 'url' => ['/drivers/'],
                 'access' => [
                     'class' => \yii\filters\AccessControl::className(),
                     'rules' => [
@@ -68,7 +78,7 @@ AppAsset::register($this);
                     ],
                 ],
             ],
-            ['label' => 'Клиенты', 'url' => ['/clients/index'],
+            ['label' => 'Клиенты', 'url' => ['/clients/'],
                 'access' => [
                     'class' => \yii\filters\AccessControl::className(),
                     'rules' => [
@@ -96,7 +106,7 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
-
+    </header>
     <div class="container-fluid">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

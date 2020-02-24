@@ -617,8 +617,11 @@ $(document).ready(function () {
     });
 
     $('.prow td').click(function () {
+        let id = $(this).parent('.prow').data('id');
         $('.prow').removeClass('sel');
         $(this).parent('.prow').addClass('sel');
+        $('button.edit-order').removeAttr('disabled');
+        $('button.edit-order').attr('onClick', 'openEditOrder('+id+')');
     });
 
     $('.prow td').dblclick(function () {

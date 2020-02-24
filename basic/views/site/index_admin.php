@@ -66,7 +66,7 @@ $this->title = 'Попутчик - Прилеты/Вылеты';
                         array(
                             'label'=>'Дата',
                             'attribute'=>'date',
-                            'format' =>  ['date', 'dd.MM.YYYY HH:mm'],
+                            'format' =>  ['date', 'dd.MM.Y HH:mm'],
                         ),
                         array(
                             'attribute'=>'flight_number',

@@ -169,7 +169,10 @@ a.desc:after {
 .table{font-size: 12px;}
 .table thead th { background-color: rgba(29,150,178,1); border: 1px solid rgba(29,150,178,1); font-weight: normal; text-align: center; color: white;}
 .table thead th a {color: #ffffff; text-decoration: none;}
+.table caption {font-size: 18px;}
 
 .prow.free {background-color: #ffffff;}
 .prow.sel {background-color: #ffee99 !important;}
+
+.prow .set-driver {display: inline-block; z-index: 101;}
 

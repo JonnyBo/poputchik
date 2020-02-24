@@ -95,8 +95,21 @@ $this->title = 'Попутчик - Прилеты/Вылеты';
                         ),
                         array(
                             'attribute'=>'driver_id',
+                            'format' => 'raw',
                             'value' => function ($model, $key, $index, $widget) {
-                                //return $model->driver->name;
+                                if ($model->driver_id > 0)
+                                    return $model->driver->name;
+                                else
+                                    return Html::a('Не назначен('.$model->getDriverAppsToOrder($model->id).')', 'javascript:void(0)', ['data-id' => $model->id, 'class' => 'set-driver']);
+                            },
+                        ),
+                        array(
+                            'attribute'=>'status',
+                            //'format' => 'raw',
+                            //'value' => Arrivals::getOrderStatus($arrivals->status),
+                            'value' => function ($model, $key, $index, $widget) {
+                                return $model->getOrderStatus($model->status);
+                                //return $model->status;
                             },
                         ),
                     );

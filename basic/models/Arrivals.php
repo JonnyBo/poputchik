@@ -9,6 +9,12 @@ use yii\db\ActiveRecord;
 
 class Arrivals extends ActiveRecord
 {
+
+    const STATUS_ACCEPT = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_EXECUT = 2;
+    const STATUS_PAID =3;
+
     public static function tableName()
     {
         return 'arrivals';
@@ -40,6 +46,9 @@ class Arrivals extends ActiveRecord
             'client_id' => 'Клиент',
             'driver_id' => 'Водитель',
             'type' => 'Прилет/Вылет',
+            'round' => 'Круг',
+            'status' => 'Статус',
+            'driver_order' => 'Заказ от водителя',
         ];
     }
 
@@ -67,6 +76,22 @@ class Arrivals extends ActiveRecord
                 return 'есть 5';
         }
         //return false;
+    }
+
+    public function getDriverAppsToOrder($order_id) {
+        return count(DriverApps::findAll(['order_id' => $order_id]));
+    }
+
+    public static function getOrderStatus($value = false)
+    {
+        $status = array(
+            self::STATUS_ACCEPT => Yii::t('app', 'Принят'),
+            self::STATUS_ACTIVE => Yii::t('app', 'Выполняется'),
+            self::STATUS_EXECUT => Yii::t('app', 'Исполнен'),
+            self::STATUS_PAID => Yii::t('app', 'Оплачен')
+        );
+
+        return ($value !== false && $status[$value]) ? $status[$value] : $status;
     }
 
 }

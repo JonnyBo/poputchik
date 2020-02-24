@@ -4,6 +4,7 @@ namespace app\controllers;
 
 
 
+use app\models\DriverApps;
 use app\models\Drivers;
 use Yii;
 use yii\db\Query;
@@ -245,39 +246,47 @@ class SiteController extends Controller
     // Всплывшее модальное окно назначения водителя
     public function actionSetdriver()
     {
-        $id = intval(Yii::$app->request->post('id'));
+        $id = intval(Yii::$app->request->post('id', 7));
         $arrival = Arrivals::findOne($id);
         $model = new Drivers();
-        $params = [':arrival_id' => $arrival->id];
-        $apps = Yii::$app->db->createCommand('SELECT * FROM driver_apps WHERE order_id=:arrival_id')->bindValues($params)->queryAll();
+        //$params = [':arrival_id' => $arrival->id];
+        //$apps = Yii::$app->db->createCommand('SELECT * FROM driver_apps WHERE order_id=:arrival_id')->bindValues($params)->queryAll();
+        $apps = DriverApps::findAll(['order_id' => $id]);
         $result = [];
         if (!empty($apps)) {
-            $params = [];
             foreach ($apps as $app) {
+                $res =[];
                 $driver = Drivers::findOne($app['driver_id']);
-                $params = [':arrival_id' => $arrival->id, ':departure_id' => $arrival->id];
-                $round = Yii::$app->db->createCommand('SELECT * FROM rounds WHERE arrival_id=:arrival_id OR departure_id=:departure_id')->bindValues($params)->queryOne();
-                $app['driver_name'] = $driver->name;
-                $app['driver_phone'] = $driver->phone;
-                $app['driver_auto_model'] = $driver->auto_model;
-                $app['driver_places'] = $driver->places;
-                $result[] = $app;
-                /*
-                if (!empty($round)) {
-                    if ($arrival->id == $round['arrival_id']) {
-                        $addparams = [':arrival_id' => $round['departure_id']];
-                    } else {
-                        $addparams = [':arrival_id' => $round['arrival_id']];
-                    }
-                    $addapps = Yii::$app->db->createCommand('SELECT * FROM driver_apps WHERE order_id=:arrival_id')->bindValues($addparams)->queryOne();
+                //print_r($driver);
+                //$params = [':arrival_id' => $arrival->id, ':departure_id' => $arrival->id];
+                //$round = Yii::$app->db->createCommand('SELECT * FROM rounds WHERE arrival_id=:arrival_id OR departure_id=:departure_id')->bindValues($params)->queryOne();
+                $res['date'] = $app['date'];
+                $res['driver_id'] = $driver->id;
+                $res['driver_name'] = $driver->name;
+                $res['driver_phone'] = $driver->phone;
+                $res['driver_auto_model'] = $driver->auto_model;
+                $res['driver_places'] = $driver->places;
+                $res['driver_auto_color'] = $driver->auto_color;
+                //$app['driver_places'] = $driver->places;
+
+                $result[] = $res;
+                $params = ['type' => 'arrivals'];
+                if ($arrival->type == 'arrivals') {
+                    $params = ['type' => 'departures'];
+                }
+                $params['round'] = $arrival->id;
+                $round_order = Arrivals::findOne($params);
+                if (!empty($round_order)) {
+                    $addapps = [];
+                    $addapps['date'] = $app['date'];
+                    $addapps['driver_id'] = $driver->id;
                     $addapps['driver_name'] = $driver->name;
                     $addapps['driver_phone'] = $driver->phone;
                     $addapps['driver_auto_model'] = $driver->auto_model;
                     $addapps['driver_places'] = $driver->places;
-                    $addapps['driver_return'] = 1;
+                    $addapps['driver_auto_color'] = $driver->auto_color;
                     $result[] = $addapps;
                 }
-                */
             }
         }
         $dataProvider = new ArrayDataProvider([
@@ -329,6 +338,7 @@ class SiteController extends Controller
     // Сохранение назначения водителя
     public function actionTiedriver()
     {
+        Yii::info(Yii::$app->request->post(), 'dev');
         $arrival_id = intval(Yii::$app->request->post('arrival_id'));
         $driver = new Drivers();
         $params = [':arrival_id' => $arrival_id, ':departure_id' => $arrival_id];

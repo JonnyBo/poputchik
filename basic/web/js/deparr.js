@@ -629,4 +629,8 @@ $(document).ready(function () {
         alert(idn);
     });
 
+    $('.prow .set-driver').click(function () {
+        openSetDriver($(this).data('id'));
+    });
+
 });

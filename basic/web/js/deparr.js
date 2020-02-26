@@ -3,26 +3,46 @@ function refreshArrivals() {
     $('#refresh_jqArrivals').click();
 }
 
+function successMessage(message) {
+    var modalContainer = $('#my-modal');
+    var modalBody = modalContainer.find('.modal-body');
+    var insidemodalBody = modalContainer.find('.gb-user-form');
+    insidemodalBody.html('').hide(); //
+    //$('#my-modal').modal('hide');
+    modalBody.html("<div class='alert alert-success'>");
+    $('.alert-success').append("<strong>"+message+"</strong>");
+    $('.alert-success').append('</div>');
+    modalContainer.modal({show:true});
+    setTimeout(function() { // скрываем modal через 4 секунды
+        $("#my-modal").modal('hide');
+    }, 4000);
+}
+
 function daConnect(dRowId, aRowId) {
-    var url = '/site/setconnect';
-    $.ajax({
-        url: url,
-        async: true,
-        type: "POST",
-        data: {'did':dRowId, 'aid':aRowId},
-        success: function (result) {
-            var modalContainer = $('#my-modal');
-            var modalBody = modalContainer.find('.modal-body');
-            //var insidemodalBody = modalContainer.find('.gb-user-form');
-            $('button.connect').attr('disabled', 'disable');
-            if (result == 'true') {
-                refreshArrivals();
+    let url = '/site/setconnect';
+    //alert(dRowId, aRowId);
+    if (aRowId && dRowId) {
+        $.ajax({
+            url: url,
+            //async: true,
+            type: "POST",
+            data: {'did': dRowId, 'aid': aRowId},
+            success: function (result) {
+                var modalContainer = $('#my-modal');
+                var modalBody = modalContainer.find('.modal-body');
+                //var insidemodalBody = modalContainer.find('.gb-user-form');
+                $('button.connect').attr('disabled', 'disable');
+                if (result == 'true') {
+                    successMessage('Заказы связаны в круг');
+                } else {
+                    //modalBody.html(result).hide().fadeIn();
+                    modalBody.html(result);
+                }
             }
-            else {
-                modalBody.html(result).hide().fadeIn();
-            }
-        }
-    });
+        });
+    } else {
+        alert('Errorr!');
+    }
 }
 
 function daDisConnect(dRowId, aRowId) {
@@ -268,6 +288,18 @@ $(document).ready(function () {
                 modalContainer.modal({show:true});
             }
         });
+    });
+    $('.connect').click(function(event){ // нажатие на кнопку - выпадает модальное окно
+        event.preventDefault();
+        var aRowId = $('#arrivals .prow.sel').data('id');
+        var dRowId = $('#departures .prow.sel').data('id');
+        daConnect(dRowId, aRowId);
+    });
+    $('.disconnect').click(function(event){ // нажатие на кнопку - выпадает модальное окно
+        event.preventDefault();
+        let aRowId = $('#arrivals .prow.sel').data('id');
+        let dRowId = $('#departures .prow.sel').data('id');
+        daDisConnect(dRowId, aRowId);
     });
     $('.all-apps').click(function(event){ // нажатие на кнопку - выпадает модальное окно
         event.preventDefault();
@@ -617,11 +649,22 @@ $(document).ready(function () {
     });
 
     $('.prow td').click(function () {
-        let id = $(this).parent('.prow').data('id');
-        $('.prow').removeClass('sel');
+        let idRow = $(this).parent('.prow').data('id');
+        let idTable = $(this).closest('table').attr('id');
+        $('#' + idTable + ' .prow').removeClass('sel');
         $(this).parent('.prow').addClass('sel');
         $('button.edit-order').removeAttr('disabled');
-        $('button.edit-order').attr('onClick', 'openEditOrder('+id+')');
+        $('button.edit-order').attr('onClick', 'openEditOrder('+idRow+')');
+        //$('button.connect').addAttr('disabled');
+        if (idTable == 'arrivals') {
+            if ($('#departures tr.sel').length > 0) {
+                $('button.connect').removeAttr('disabled');
+            }
+        } else {
+            if ($('#arrivals tr.sel').length > 0) {
+                $('button.connect').removeAttr('disabled');
+            }
+        }
     });
 
     $('.prow td').dblclick(function () {

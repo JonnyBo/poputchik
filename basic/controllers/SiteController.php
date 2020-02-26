@@ -474,21 +474,21 @@ class SiteController extends Controller
     }
 
     public function actionSetconnect() {
-        $did = Yii::$app->request->post('did');
-        $aid = Yii::$app->request->post('aid');
+        $did = Yii::$app->request->post('did', false);
+        $aid = Yii::$app->request->post('aid', false);
         if (!$aid || !$did) {
             return json_encode('Error!');
         }
-        $params = [':arrival_id' => intval($aid), ':departure_id' => intval($did)];
-        $round = Yii::$app->db->createCommand('SELECT * FROM rounds WHERE arrival_id=:arrival_id OR departure_id=:departure_id')->bindValues($params)->queryOne();
-        if ($round) {
-            return json_encode('Error!');
-        } else {
-            Yii::$app->db->createCommand()->insert('rounds', [
-                'arrival_id' => intval($aid),
-                'departure_id' => intval($did),
-            ])->execute();
+        try {
+            $arrival = Arrivals::findOne(['id' => $aid]);
+            $arrival->round = $did;
+            $arrival->save();
+            $departures = Arrivals::findOne(['id' => $did]);
+            $departures->round = $aid;
+            $departures->save();
             return json_encode(true);
+        } catch (ErrorException $ex) {
+            return json_encode($ex->getMessage());
         }
     }
 

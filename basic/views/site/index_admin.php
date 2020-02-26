@@ -16,8 +16,8 @@ $this->title = 'Попутчик - Прилеты/Вылеты';
                 <a class="btn btn-success new-order">Новый заказ клиента</a>
                 <!--a class="btn btn-success new-app">Новая заявка водителя</a-->
                 <button type="button" class="btn btn-success edit-order"  disabled="disabled">Редактировать</button>
-                <button type="button" class="btn btn-primary set-driver"  disabled="disabled">Привязать водителя</button>
-                <button type="button" class="btn btn-secondary clear-driver"  disabled="disabled">Отвязать водителя</button>
+                <!--button type="button" class="btn btn-primary set-driver"  disabled="disabled">Привязать водителя</button>
+                <button type="button" class="btn btn-secondary clear-driver"  disabled="disabled">Отвязать водителя</button-->
                 <button type="button" class="btn btn-primary connect"  disabled="disabled">Связать</button>
                 <button type="button" class="btn btn-secondary disconnect" disabled="disabled">Отвязать</button>
                 <!--a class="btn btn-success all-apps">Заявки водителей</a-->
@@ -120,6 +120,10 @@ $this->title = 'Попутчик - Прилеты/Вылеты';
                         'caption'=>'Прилеты',
                         'showHeader' => true,
                         'columns' => $columns,
+                        'tableOptions' => [
+                            'class' => 'table table-striped table-bordered',
+                            'id' => 'arrivals'
+                        ],
                         'rowOptions' => function($arrivals, $key, $index, $grid) {
                             $class = 'prow';
                             if($arrivals->driver_id == 0){
@@ -141,6 +145,10 @@ $this->title = 'Попутчик - Прилеты/Вылеты';
                         'caption'=>'Вылеты',
                         'showHeader' => true,
                         'columns' => $columns,
+                        'tableOptions' => [
+                            'class' => 'table table-striped table-bordered',
+                            'id' => 'departures'
+                        ],
                         'rowOptions' => function($departures, $key, $index, $grid){
                             $class = 'prow';
                             if($departures->driver_id == 0){
